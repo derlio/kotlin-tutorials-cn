@@ -63,7 +63,7 @@ val lambda = if (condition) { a: Int -> print(a) } else { b: Int -> print(b) }
 
 The return type of a lambda expression is inferred from the type of the last expression inside it (or from the function type of the variable/parameter that the lambda expression is assigned to). If a lambda expression is passed as a function parameter (which is the ordinary use) or assigned to a variable with a declared type, Kotlin can infer the parameter types too, and you only need to specify their names:  
 
-Lambda表达式的返回类型由最后的表达式推导出（或者从lambda表达式被赋值的变量或参数推导出）。
+Lambda表达式的返回类型由最后的表达式推导出（或者从lambda表达式被赋值的变量或参数推导出）。如果一个lambda表达式作为函数参数被传递（普通使用），或被赋值给有声明类型的变量，Kotlin也可以推导出参数类型，你只需指定参数名即可：
 
 ```kotlin
 val safeDivide: (Int, Int) -> Double = { numerator, denominator ->
@@ -119,7 +119,7 @@ callWithPi(fun(x: Double) = x * x)
 
 Lambda expressions and anonymous functions are collectively called _function literals_.  
 
-Lambda表达式和匿名函数统称为 _函数字面量_ 。
+Lambda表达式和匿名函数统称为 **函数字面量** 。
 
 
 ## 集合推导
@@ -168,9 +168,13 @@ val car = Car(120)
 println(car.boast())
 ```
 
-Inside a lambda expression with receiver, you can use `this` to refer to the receiver object (in this case, `car`). As usual, you can omit `this` if there are no naming conflicts, which is why we can simply say `$horsepowers` instead of `${this.horsepowers}`. So beware that in Kotlin, `this` can have different meanings depending on the context: if used inside (possibly nested) lambda expressions with receivers, it refers to the receiver object of the innermost enclosing lambda expression with receiver. If you need to "break out" of the function literal and get the "original" `this` (the instance the member function you're inside is executing on), mention the containing class name after `this@` - so if you're inside a function literal with receiver inside a member function of Car, use `this@Car`.
+Inside a lambda expression with receiver, you can use `this` to refer to the receiver object (in this case, `car`). As usual, you can omit `this` if there are no naming conflicts, which is why we can simply say `$horsepowers` instead of `${this.horsepowers}`. So beware that in Kotlin, `this` can have different meanings depending on the context: if used inside (possibly nested) lambda expressions with receivers, it refers to the receiver object of the innermost enclosing lambda expression with receiver. If you need to "break out" of the function literal and get the "original" `this` (the instance the member function you're inside is executing on), mention the containing class name after `this@` - so if you're inside a function literal with receiver inside a member function of Car, use `this@Car`.  
 
-As with other function literals, if the function takes one parameter (other than the receiver object that it is invoked on), the single parameter is implicitly called `it`, unless you declare another name. If it takes more than one parameter, you must declare their names.
+在有接收者的lambda表达式中，可以使用`this`引用接收者对象（如`car`）。通常情况下如果没有命名冲突时可以省略`this`，所以这里可以用`$horsepowers`代替`${this.horsepowers}`。Kotlin中的`this`根据上下文有着不同的含义：如果被用在有接收者的lambda（也可能嵌套），`this`引用最靠近内层lambda的接收者。如果你想跳出函数字面量拿到"原来"的`this`，在`this@`后加上需要的类名即可。如在Car的成员函数中的有接收者的函数字面量，使用`this@Car`。
+
+As with other function literals, if the function takes one parameter (other than the receiver object that it is invoked on), the single parameter is implicitly called `it`, unless you declare another name. If it takes more than one parameter, you must declare their names.  
+
+对于其他的函数字面量，如果函数只有一个参数（接收者对象就是被调用者对象除外），这个参数被隐式称为`it`，除非声明另一个名字。
 
 Here's a small DSL example for constructing tree structures:
 
